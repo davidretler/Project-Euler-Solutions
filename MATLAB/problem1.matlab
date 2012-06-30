@@ -1,3 +1,7 @@
+%%Project Euler Problem Number One
+%%Find the sum of all the multiples of 3 or 5 below 1000.
+%%David Etler, 29 June 2012
+
 function total = main(n)
     array = [];                                 %Initialize an empty array
     count = 0;                                  %Ticker

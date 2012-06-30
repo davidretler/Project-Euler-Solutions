@@ -1,3 +1,7 @@
+%%Project Euler Problem Number Two
+%%By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
+%%David Etler, 29 June 2012
+
 function total = main()
     seed1 = 0;                                  %First Fibonacci value is 0
     seed2 = 1;                                  %Second Fibonacci value is 1
