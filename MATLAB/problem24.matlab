@@ -7,5 +7,5 @@ multiply = zeros(length(permutations),10);      %Create a matrix to multiply the
 for j = 1:10
         multiply(:,j) = 1*10^(10-j);            %The columns are the decimal place of the corresponding digit
 end
-nums(:,:) = sum((permutations.*multiply)');     %By multiplying and summing the matrix, the digits become consecrated
+nums(:,:) = sum((permutations.*multiply)');     %By multiplying and summing the matrix, the digits become concatenated
 sprintf('%u',sort(nums)(1e6))                   %Sort them lexicographically and print the 1,000,000th
