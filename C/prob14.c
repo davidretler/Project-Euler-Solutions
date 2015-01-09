@@ -14,7 +14,7 @@ Which starting number, under one million, produces the longest chain?
 */
 
 //#define DEBUG
-#define ANS_SIZE 2482111348
+//#define ANS_SIZE 2482111348
 
 
 #include <stdio.h>
@@ -26,7 +26,7 @@ void initialize(unsigned short* answers);
 long collatz_s(long n);
 
 
-
+//Pretty efficient. Takes .2 seconds when compiled with -O3 on my A10.
 int main(void)
 {
 	//unsigned short answers[ANS_SIZE];
@@ -51,7 +51,6 @@ int main(void)
 	
 	printf("Highest Collatz sequence betweem 0 and 1000000 is %ld with depth %ld.\n", highest_n, highest_depth);
 	
-	printf("%ld", collatz_s(113383));
 	return 0;
 }
 
