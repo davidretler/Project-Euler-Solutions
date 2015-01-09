@@ -39,6 +39,7 @@ int main(void)
 }
 
 //Returns the nth triangle number, O(1)
+//Explicit form makes this one pretty efficient
 long triangle_number(long n)
 {
 	//Explicit closed form
@@ -46,6 +47,7 @@ long triangle_number(long n)
 }
 
 //Returns true if a number is prime, O(sqrt(n))
+//This naive algorithm works by trial division rather than anything fancy.
 bool is_prime(long long int num)
 {
 	long long int max = ceil(sqrt(num));
@@ -78,6 +80,11 @@ long next_prime(long p)
 }
 
 //Returns the number of divisors in n, O(log n) I think (divide and conquer) 
+//This takes the number and finds the multiplicity of each prime factor. Once that has been 
+//accomplished, we find the total number of divisors by taking the product of each element + 1.
+//For example 12 => {2, 1, 0, 0,...} so n_divisors(12) = (2+1)*(1+1)*(0+1)*... = 3*2*1*1*... = 6.
+//Because we only need to find the prime factors rather than every factor from trial division, we
+//have a much more efficient method.
 long n_divisors(long n)
 {
 	//long l = ceil(n - sqrt(n));
@@ -103,6 +110,10 @@ long n_divisors(long n)
 }
 
 //Fills the matrix passed with the divisors
+//Basically find the lowest prime factor. Increment the corresponding element in the matrix by one,
+//divide the number by the factor and recursively factor that. If there is no prime factor let, then
+//we're done. The result is a matrix that contains the multiplicity of each prime factor (0 if not a
+//factor. For example, factors(12, m) would make m = {2, 1, 0, 0,...} because 12 = 2^2 * 3^1.
 int factors(long n, long *fac_matrix)
 {
 	long test = 2;
