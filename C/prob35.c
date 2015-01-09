@@ -50,6 +50,7 @@ bool check_circularity(long p)
 	//n digits means n - 1 rotations
 	int digits = n_digits(p);
 	
+	//Rotate the proper number of times
 	for(int i = 0; i < digits; i++)
 	{
 		if(!is_prime(p))
@@ -101,6 +102,7 @@ bool is_prime(long num)
 	return prime;
 }
 
+//Returns the number of digits in the number
 int n_digits(long n)
 {
 	return ceil(log(n)/log(10));
