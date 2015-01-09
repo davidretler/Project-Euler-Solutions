@@ -1,5 +1,5 @@
 /*
-Problem 14 (UNFINISHED)
+Problem 14 
 The following iterative sequence is defined for the set of positive integers:
 
 n → n/2 (n is even)
