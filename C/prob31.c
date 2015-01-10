@@ -17,32 +17,15 @@ int main(void)
 {
 	long count  = 0;
 	for(int one = 0; one <= 200; one++)
-	{
-		for(int two = 0; two <= 100 - one/2; two++)
-		{
-			for(int five = 0; five <= 40 - one/5 - (2*two)/5 ; five++)
-			{
-				for(int ten = 0; ten <= 20 - one/10 - two/5 - five/2; ten++)
-				{
-					for(int twenty = 0; twenty <= 10 - one/20 - two/10 - five/4 - ten/2; twenty++)
-					{
-						for(int fifty = 0; fifty <= 4 - one/50 - two/25 - five/10 - ten/5 - (2*twenty)/5; fifty++)
-						{
-							for(int one_hundred = 0; one_hundred <= 2 - one/100 - two/50 - five/20 - ten/10 - twenty/5 - fifty/2; one_hundred++)
-							{
-								for(int two_hundred = 0; two_hundred <= 1; two_hundred++)
-								{
-									if(one + 2*two + 5*five + 10*ten + 20*twenty + 50*fifty + 100*one_hundred + 200*two_hundred == 200)
-									{
-										count++;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+	for(int two = 0; two <= 100 - one/2; two++)
+	for(int five = 0; five <= 40 - one/5 - (2*two)/5 ; five++)
+	for(int ten = 0; ten <= 20 - one/10 - two/5 - five/2; ten++)
+	for(int twenty = 0; twenty <= 10 - one/20 - two/10 - five/4 - ten/2; twenty++)
+	for(int fifty = 0; fifty <= 4 - one/50 - two/25 - five/10 - ten/5 - (2*twenty)/5; fifty++)
+	for(int one_hundred = 0; one_hundred <= 2 - one/100 - two/50 - five/20 - ten/10 - twenty/5 - fifty/2; one_hundred++)
+	for(int two_hundred = 0; two_hundred <= 1; two_hundred++)
+		if(one + 2*two + 5*five + 10*ten + 20*twenty + 50*fifty + 100*one_hundred + 200*two_hundred == 200)
+			count++;
+
 	printf("There are %ld possible combinations!\n", count);
 }
