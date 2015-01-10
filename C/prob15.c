@@ -34,7 +34,7 @@ void lattice_paths(long* num_paths, int x, int y)
 	if(x == LATTICE_SIZE && y == LATTICE_SIZE)
 	{
 		#ifdef DEBUG
-		//printf("Found corner! n = %ld\n", (*num_paths));
+		printf("Found corner! n = %ld\n", (*num_paths));
 		#endif
 		(*num_paths)++;
 		return;
