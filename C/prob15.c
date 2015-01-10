@@ -1,5 +1,5 @@
 /*
-Problem 15 (Unfinished)
+Problem 15 
 
 Starting in the top left corner of a 2×2 grid, and only being able to move to the right and down, there are exactly 6 routes to the bottom right corner.
 
@@ -28,7 +28,7 @@ int main(void)
 	return 0;
 }
 
-//Got the algorithm to run in .044s using an optimization 
+//Got the algorithm to run in .04s using an optimization 
 long lattice_paths(int x, int y, long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
 {
 	#ifdef DEBUG
@@ -74,7 +74,7 @@ long lattice_paths(int x, int y, long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
 	return cached[x][y];
 }
 
-
+//initialize all values to 0
 void initialize_cache(long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
 {
 	for(int i = 0; i <= LATTICE_SIZE; i++)
