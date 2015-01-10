@@ -8,11 +8,9 @@ Find the sum of all numbers, less than one million, which are palindromic in bas
 */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
 #include <string.h>
-
 bool check_palindrome(char* string);
 static char* i_to_base2(long num);
 int n_digits(long n);
@@ -37,7 +35,7 @@ int main(void)
 		}
 	}	
 	
-	printf("The sum of all the palindomes in bases 2 and 10 under 1000000 is %d.\n", sum);
+	printf("The sum of all the palindromes in both bases 2 and 10 under 1000000 is %d.\n", sum);
 	return 0;
 }
 
