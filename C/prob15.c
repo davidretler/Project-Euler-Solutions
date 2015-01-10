@@ -17,12 +17,9 @@ void initialize_cache(long cached[LATTICE_SIZE+1][LATTICE_SIZE+1]);
 
 int main(void)
 {
-	//long* num_paths = malloc(sizeof (long int));
-	//*num_paths = 0;
-	
+
 	long cached[LATTICE_SIZE+1][LATTICE_SIZE+1];
 	initialize_cache(cached);
-	printf("%ld\n", cached[0][0]);
 	
 	long num_paths = lattice_paths(0, 0, cached);
 
@@ -38,6 +35,7 @@ long lattice_paths(int x, int y, long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
 	printf("Checking (%d, %d)\n", x, y);
 	#endif
 
+	//if we're out of bounds
 	if(x > LATTICE_SIZE || y > LATTICE_SIZE || x < 0 || y < 0)
 	{
 		
@@ -47,6 +45,7 @@ long lattice_paths(int x, int y, long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
 		return 0;
 	}
 	
+	//if we already know the number of of paths from this point
 	if(cached[x][y] != 0)
 	{
 		#ifdef DEBUG
@@ -55,20 +54,23 @@ long lattice_paths(int x, int y, long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
 		return cached[x][y];
 	}
 	
+	//if we've reached the end!
 	if(x == LATTICE_SIZE && y == LATTICE_SIZE)
 	{
 		#ifdef DEBUG
-		printf("Dead end!\n");
+		printf("End!\n");
 		#endif
 		return 1;
 	}
-	//out of bounds (or if num_paths overflowed)
 
 
 	//cache the number of ways from this point to zero
-	cached[x][y] += lattice_paths(x + 1, y, cached) + lattice_paths(x, y + 1, cached);
+	//sum of two possible paths: right or down
+	cached[x][y] = lattice_paths(x + 1, y, cached) + lattice_paths(x, y + 1, cached);
 	
+	#ifdef DEBUG
 	printf("From (%d, %d) there are %ld paths.\n", x, y, cached[x][y]);
+	#endif
 	return cached[x][y];
 }
 
