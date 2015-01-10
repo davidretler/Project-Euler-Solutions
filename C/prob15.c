@@ -12,52 +12,74 @@ How many such routes are there through a 20×20 grid?
 #include <stdio.h>
 #include <stdlib.h>
 
-void lattice_paths(long* num_paths, int x, int y);
+long lattice_paths(int x, int y, long cached[LATTICE_SIZE+1][LATTICE_SIZE+1]);
+void initialize_cache(long cached[LATTICE_SIZE+1][LATTICE_SIZE+1]);
 
 int main(void)
 {
-	long* num_paths = malloc(sizeof (long int));
-	*num_paths = 0;
+	//long* num_paths = malloc(sizeof (long int));
+	//*num_paths = 0;
+	
+	long cached[LATTICE_SIZE+1][LATTICE_SIZE+1];
+	initialize_cache(cached);
+	printf("%ld\n", cached[0][0]);
+	
+	long num_paths = lattice_paths(0, 0, cached);
 
-	lattice_paths(num_paths, 0, 0);
-	
-	printf("Number of paths: %ld\n", *num_paths);
-	
+	printf("Number of paths: %ld\n", num_paths);
+
 	return 0;
 }
 
-//This algorithm *should* work but it's taking forever to run
-void lattice_paths(long* num_paths, int x, int y)
+//Got the algorithm to run in .044s using an optimization 
+long lattice_paths(int x, int y, long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
 {
+	#ifdef DEBUG
+	printf("Checking (%d, %d)\n", x, y);
+	#endif
 
-	//bottom right corner
-	if(x == LATTICE_SIZE && y == LATTICE_SIZE)
-	{
-		#ifdef DEBUG
-		printf("Found corner! n = %ld\n", (*num_paths));
-		#endif
-		(*num_paths)++;
-		return;
-	}
-	//out of bounds (or if num_paths overflowed)
-	if(x > LATTICE_SIZE || y > LATTICE_SIZE || x < 0 || y < 0 || *num_paths < 0)
+	if(x > LATTICE_SIZE || y > LATTICE_SIZE || x < 0 || y < 0)
 	{
 		
 		#ifdef DEBUG
 		printf("Stopping!\n");
 		#endif
-		return;
+		return 0;
 	}
 	
+	if(cached[x][y] != 0)
+	{
+		#ifdef DEBUG
+		printf("Cached! %ld\n", cached[x][y]);
+		#endif
+		return cached[x][y];
+	}
 	
-	//branch down
-	#ifdef DEBUG
-	printf("Branching down (%d, %d)\n", x, y);
-	#endif
-	lattice_paths(num_paths, x + 1, y);
-	//branch right
-	#ifdef DEBUG
-	printf("Branching right (%d, %d)\n", x, y);
-	#endif
-	lattice_paths(num_paths, x, y + 1);
+	if(x == LATTICE_SIZE && y == LATTICE_SIZE)
+	{
+		#ifdef DEBUG
+		printf("Dead end!\n");
+		#endif
+		return 1;
+	}
+	//out of bounds (or if num_paths overflowed)
+
+
+	//cache the number of ways from this point to zero
+	cached[x][y] += lattice_paths(x + 1, y, cached) + lattice_paths(x, y + 1, cached);
+	
+	printf("From (%d, %d) there are %ld paths.\n", x, y, cached[x][y]);
+	return cached[x][y];
+}
+
+
+void initialize_cache(long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
+{
+	for(int i = 0; i <= LATTICE_SIZE; i++)
+	{
+		for(int j = 0; j <= LATTICE_SIZE; j++)
+		{	
+			cached[i][j] = 0;
+		}
+	}
 }
