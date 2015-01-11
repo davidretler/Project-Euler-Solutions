@@ -9,7 +9,7 @@ long next_prime(long p);
 //This naive algorithm works by trial division rather than anything fancy.
 bool is_prime(long num)
 {
-	if(num == 1) return false;
+	if(num == 1 || num <= 0) return false;
 	
 	long max = ceil(sqrt(num));
 	long n = 2;
