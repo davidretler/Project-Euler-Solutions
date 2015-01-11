@@ -38,7 +38,6 @@ long lattice_paths(int x, int y, long cached[LATTICE_SIZE+1][LATTICE_SIZE+1])
 	//if we're out of bounds
 	if(x > LATTICE_SIZE || y > LATTICE_SIZE || x < 0 || y < 0)
 	{
-		
 		#ifdef DEBUG
 		printf("Stopping!\n");
 		#endif

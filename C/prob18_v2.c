@@ -47,21 +47,21 @@ const int TRIANGLE[ROWS+1][ROWS+1] = {{75, 00, 00, 00, 00, 00, 00, 00, 00, 00, 0
 								
 long triangle_sum(int row_offset, int col_offset);
 
+static int call_count = 0;
+
 int main(void)
 {
 	long sum = triangle_sum(0, 0);
 	
-	printf("Largest sum found: %ld\n", sum);
+	printf("Largest sum found: %ld\nCalled %d times.\n", sum, call_count);
 	
 	return 0;
 }
 
 
 /*
-	A more efficient approach.
+	A more efficient approach. (Okay after testing turns out this is exactly the same solution)
 
-	row -- the row of the current element
-	column -- the column of the current element
 	row_offset -- the index of the first row of the tree we're traversing (0 is first)
 	col_offset -- the index of the first column of the tree we're traversing
 	
@@ -72,7 +72,7 @@ int main(void)
 long triangle_sum(int row_offset, int col_offset)
 {
 	
-
+	call_count++;
 	
 	//Out of bounds: too far left or too far down
 	if(col_offset > row_offset || col_offset < 0 || row_offset > ROWS)

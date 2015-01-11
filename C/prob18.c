@@ -47,6 +47,8 @@ const int TRIANGLE[ROWS+1][ROWS+1] = {{75, 00, 00, 00, 00, 00, 00, 00, 00, 00, 0
 								  
 void triangle_sum(int row, int column, long *sum, long curr_sum);
 
+static int call_count = 0;
+
 int main(void)
 {
 	long *sum = malloc(sizeof (long int));
@@ -54,7 +56,7 @@ int main(void)
 	
 	triangle_sum(0, 0, sum, 0);
 	
-	printf("Largest sum found: %ld\n", *sum);
+	printf("Largest sum found: %ld\nCalled %d times.\n", *sum, call_count);
 	
 	return 0;
 }
@@ -62,6 +64,7 @@ int main(void)
 //standard recursive transversal (brute force)
 void triangle_sum(int row, int column, long *sum, long curr_sum)
 {
+	call_count++;
 	#ifdef DEBUG
 	printf("(%d, %d, %d) %ld\n", row, column, TRIANGLE[row][column], curr_sum);
 	#endif
