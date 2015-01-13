@@ -16,7 +16,6 @@ static char* i_to_base2(long num);
 int n_digits(long n);
 
 
-
 int main(void)
 {
 	int sum = 0;

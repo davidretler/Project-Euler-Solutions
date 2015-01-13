@@ -15,16 +15,15 @@ Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can be see
 
 Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
 */
+
+
 //#define DEBUG
 #include <stdio.h>
-//#include <stdlib.h>
-//#include <math.h>
-//#include <stdbool.h>
 
 int long_division_cycle(int num, int denom, int offset, int remainder);
 void reset_prev(void);
 
-
+//allocates more memory than necessary
 static int prev[1000];
 
 int main(void)
@@ -52,7 +51,7 @@ int main(void)
 /*
 	Performs long division of num / denom
 	Tracks the current remainder and the past remainders
-	Once we reach a remainder we've reached before, we must has a cycle
+	Once we reach a remainder we've reached before, we must have a cycle
 	The length of the cycle (the current offset minus the offset when we first reach the remainder)
 	is returned
  */
@@ -81,6 +80,7 @@ int long_division_cycle(int num, int denom, int offset, int remainder)
 	printf("Current remainder: %d\tLast offset: %d\n", remainder, prev[remainder]);
 	#endif
 	
+	//I <3 recursion
 	return long_division_cycle(num, denom, offset + 1, remainder * 10);
 }
 
