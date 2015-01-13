@@ -24,124 +24,120 @@ void initialize_sums(void);
 bool is_abundant_sum(long num);
 
 static int abundant[UPPER_BOUND];
-static int sums[UPPER_BOUND*UPPER_BOUND];
+//we only need to go to 28123 because everything above it true
+static bool sums[28123];
 
 int main(void)
 {
-     initialize_abundant();
-     initialize_sums();
+    initialize_abundant();
+    initialize_sums();
 
-     long sum = 0;
+    long sum = 0;
 
-     for(int i = 0; i < 28123; i++)
-     {
-	  if(!is_abundant_sum(i))
-	  {
-	       //printf("%d\n", i);
-	       sum += i;
-	  }
-     }
+    for(int i = 0; i < 28123; i++)
+    {
+	if(!is_abundant_sum(i))
+	{
+	    //printf("%d\n", i);
+	    sum += i;
+	}
+    }
 
-     //printf("%d\n", is_abundant_sum(28124));
+    //printf("%d\n", is_abundant_sum(28124));
 
-     printf("Sum: %ld", sum);
+    printf("Sum: %ld", sum);
      
-     return 0;
+    return 0;
 }
 
 /*
-  Returns wheter a given number is abundant or not
- */
+  Returns whether a given number is abundant or not
+*/
 bool is_abundant(long num)
 {
+    //int length = n_digits(num);
 
-     
-     int length = n_digits(num);
-     long div_array[num];
-#ifdef DEBUG
-     printf("Getting divisors.\n");
-#endif
-     divisors(num, div_array);
-     
-     long  sum = 0;
-     int i = 0;
-     while(div_array[i] != -1)
-     {
-	  sum += div_array[i++];
-     }
+    long div_array[num+1];
 
-#ifdef DEBUG
-     printf("%ld\t%ld\n",num, sum); 
-#endif
+    divisors(num, div_array);
 
+    long  sum = 0;
+    int i = 0;
 
-     return sum > num;
+    while(div_array[i] != -1)
+    {
+	sum += div_array[i++];
+    }
+
+    return sum > num;
 }
 
 bool is_abundant_sum(long num)
 {
-     for(int i = 0; i < UPPER_BOUND*UPPER_BOUND; i++)
-     {
-	  if(sums[i] == num)
-	  {
-	       return true;
-	  }
-     }
-     return false;
+    if(num > 28123) return true;
+    else return sums[num];
 }
 
 /*
   Fills an array with the divisors of the passed number
- */
+*/
 void divisors(long num, long* div_array)
 {
-     int i = 0;
-     for(long d = 1; d < num; d++)
-     {
-	  if(num % d == 0)
-	  {
-	       div_array[i++] = d;
-	  }
-     }
-     div_array[i] = -1;
+    int i = 0;
+    for(long d = 1; d < num; d++)
+    {
+	if(num % d == 0)
+	{
+	    div_array[i++] = d;
+	}
+    }
+    div_array[i] = -1;
 }
 
 /*
   Returns the number of digits in the number
- */
+*/
 int n_digits(long num)
 {
-     return ceil(log(num)/log(10));
+    return ceil(log(num)/log(10));
 }
 
 /*
   Populates and array of the abundant numbers
- */
+*/
 void initialize_abundant(void)
 {
-     int i = 0;
-     int n = 1;
-     while(i < UPPER_BOUND)
-     {
-	  if(is_abundant(n))
-	  {
-	       abundant[i++] = n;
-	  }
-	  n++;
-     }
+    int i = 0;
+    int n = 1;
+    while(i < UPPER_BOUND)
+    {
+	if(is_abundant(n))
+	{
+	    abundant[i++] = n;
+	}
+	n++;
+    }
 }
 
 /*
   Fills an array with the sums of pairs of abundant numbers
- */
+*/
 void initialize_sums(void)
 {
-     int k = 0;
-     for(int i = 0; i < UPPER_BOUND; i++)
-     {
-	  for(int j = 0; j < UPPER_BOUND; j++)
-	  {
-	       sums[k++] = abundant[i] + abundant[j];
-	  }
-     }
+    for(int k = 0; k < 28124; k++)
+    {
+	sums[k] = false;
+    }
+    
+    for(int i = 0; i < UPPER_BOUND; i++)
+    {
+	for(int j = 0; j < UPPER_BOUND; j++)
+	{
+	    int curr_sum = abundant[i] + abundant[j];
+	    if(curr_sum < 28124)
+	    {
+		sums[curr_sum] = true;
+	    }
+	}
+    }
 }
