@@ -11,6 +11,7 @@
 
 //#define DEBUG
 #define UPPER_BOUND 10000
+#define MAX_ABUNDANT 28124
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -34,7 +35,7 @@ int main(void)
 
     long sum = 0;
 
-    for(int i = 0; i < 28123; i++)
+    for(int i = 0; i < MAX_ABUNDANT - 1; i++)
     {
 	if(!is_abundant_sum(i))
 	{
@@ -45,7 +46,7 @@ int main(void)
 
     //printf("%d\n", is_abundant_sum(28124));
 
-    printf("Sum: %ld", sum);
+    printf("Sum: %ld\n", sum);
      
     return 0;
 }
@@ -74,7 +75,7 @@ bool is_abundant(long num)
 
 bool is_abundant_sum(long num)
 {
-    if(num > 28123) return true;
+    if(num > MAX_ABUNDANT - 1) return true;
     else return sums[num];
 }
 
@@ -124,7 +125,7 @@ void initialize_abundant(void)
 */
 void initialize_sums(void)
 {
-    for(int k = 0; k < 28124; k++)
+    for(int k = 0; k < MAX_ABUNDANT; k++)
     {
 	sums[k] = false;
     }
@@ -134,7 +135,7 @@ void initialize_sums(void)
 	for(int j = 0; j < UPPER_BOUND; j++)
 	{
 	    int curr_sum = abundant[i] + abundant[j];
-	    if(curr_sum < 28124)
+	    if(curr_sum < MAX_ABUNDANT)
 	    {
 		sums[curr_sum] = true;
 	    }
