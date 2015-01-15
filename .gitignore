@@ -1,9 +1,13 @@
 #compiled code
 *.exe
 *.stackdump
+
 #backups/temp files
 *.bak
 *.txt
 *.tmp
 *.asv
+
+#emacs tags and buffer files
 *tags*
+\#*\#

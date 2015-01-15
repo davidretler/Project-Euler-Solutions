@@ -6,7 +6,7 @@ By starting at the top of the triangle below and moving to adjacent numbers on t
 Find the maximum total from top to bottom in triangle.txt (right click and 'Save Link/Target As...'), a 15K text file containing a triangle with one-hundred rows.
 */
 
-#define ROWS 40
+#define ROWS 100
 //#define DEBUG
 
 #include <stdio.h>
@@ -15,48 +15,46 @@ Find the maximum total from top to bottom in triangle.txt (right click and 'Save
 
 							
 								
-long triangle_sum(int row_offset, int col_offset);
+long transverse_triangle(void);
 
-static int call_count = 0;
 
 int main(void)
 {
-	long sum = triangle_sum(0, 0);
+    long sum = transverse_triangle();
 	
-	printf("Largest sum found: %ld\nCalled %d times.\n", sum, call_count);
+    printf("Largest sum found: %ld.\n", sum);
 	
-	return 0;
+    return 0;
 }
-
 
 /*
-	I'm going to need a better algorithm if I want to finish this
+  Finally an efficient solution to this problem
+
+  The solution works thus:
+  by starting at the bottom of the triangle, we can work our way up by taking the largest of the two
+  values up to the next row. So rather than testing every single possible sum, which yield exponential 
+  complexity, we only need to make n comparisons for n rows, giving us O(n^2) complexity.
  */
-long triangle_sum(int row_offset, int col_offset)
+long transverse_triangle(void)
 {
-	
-	call_count++;
-	
-	//Out of bounds: too far left or too far down
-	if(col_offset > row_offset || col_offset < 0 || row_offset > ROWS)
+    //begin on second to last row
+    int curr_row = ROWS - 1;
+    while(curr_row >= 0)
+    {
+#ifdef DEBUG
+	printf("New row\n");
+#endif
+	//transverse each column in the row
+	for(int col = 0; col <= curr_row; col++)
 	{
-		//just stop
-		printf("ERROR\n");
-		return -1;
+	    int left = TRIANGLE[curr_row+1][col];
+	    int right = TRIANGLE[curr_row+1][col+1];
+#ifdef DEBUG
+	    printf("%d\t%d\t%d\n",TRIANGLE[curr_row][col],left,right);
+#endif
+	    TRIANGLE[curr_row][col] += (left > right) ? left : right;
 	}
-	//if on the last row
-	if(row_offset == ROWS)
-	{
-		//return the value of this node
-		return TRIANGLE[row_offset][col_offset];
-	}
-	
-	
-	int left = triangle_sum(row_offset + 1, col_offset);
-	int right = triangle_sum(row_offset + 1, col_offset + 1);
-	return TRIANGLE[row_offset][col_offset] + (left > right ? left : right);
-
-	
-	
+	curr_row--;
+    }
+    return TRIANGLE[0][0];
 }
-

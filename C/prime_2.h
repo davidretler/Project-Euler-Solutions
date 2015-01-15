@@ -19,14 +19,14 @@ static bool initialized = false;
 //This naive algorithm works by trial division rather than anything fancy.
 bool is_prime(long num)
 {
-    /* if(initialized && num < P_LIMIT)
+    if(initialized && num < P_LIMIT)
     {
 #ifdef DEBUG_PRIME
 	printf("Cached!\n");
 #endif
 	return primes[num];
     }
-    */
+    
     if(num == 1 || num <= 0) return false;
 
     long max = ceil(sqrt(num));
