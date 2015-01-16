@@ -1,9 +1,10 @@
 
+
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 
-#define N_PRIMES 1000000
+#define N_PRIMES 100000
 #define P_LIMIT 1000000
 
 bool is_prime(long long num);

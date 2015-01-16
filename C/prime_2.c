@@ -73,16 +73,21 @@ long prime(int n)
     }
 }
 
-
+/*
+  Initialized the primes and nth_prime arrays by getting all the primes up to P_LIMIT
+ */
 void initialize_primes(void)
 {
     int i = 0;
     long n = 2; 
-    while(n < P_LIMIT)
+    while(n < P_LIMIT || i < N_PRIMES)
     {
 	bool curr_b = is_prime(n);
-	primes[n] = curr_b;
-	if(curr_b)
+	if(n < P_LIMIT)
+	{
+	    primes[n] = curr_b;
+	}
+	if(curr_b && i < N_PRIMES)
 	{
 	    nth_prime[i] = n;
 	    i++;
