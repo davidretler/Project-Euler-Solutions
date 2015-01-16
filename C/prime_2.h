@@ -10,11 +10,42 @@ bool is_prime(long long num);
 int n_digits(long n);
 long next_prime(long p);
 void initialize_primes(void);
+void prime_factors(long num, int *factors);
+long prime(int n);
 
 static bool primes[P_LIMIT];
 static long nth_prime[N_PRIMES];
 static bool initialized = false;
+
 //#define DEBUG_PRIME
+
+//Fills the factors array with the prime factors of the number
+void prime_factors(long num, int *factors)
+{
+    bool first_check = true;
+    int curr_prime_index = 0;
+    while(num != 1)
+    {
+	if(first_check)
+	{
+	    factors[curr_prime_index] = 0;
+	    first_check = false;
+	}
+
+	if(num % prime(curr_prime_index) == 0)
+	{
+	    num = num / prime(curr_prime_index);
+	    factors[curr_prime_index] = factors[curr_prime_index] + 1;
+	}
+	else
+	{
+	    curr_prime_index++;
+	    first_check = true;
+	}
+    }
+    factors[++curr_prime_index] = -1;
+    return;
+}
 
 //Returns true if a number is prime, O(sqrt(n))
 //This naive algorithm works by trial division rather than anything fancy.
@@ -47,6 +78,7 @@ bool is_prime(long long num)
     return prime;
 }
 
+//Returns the nth prime number
 long prime(int n)
 {
     if(initialized && n < N_PRIMES)
@@ -85,7 +117,6 @@ int n_digits(long n)
 {
     return ceil(log(n)/log(10));
 }
-
 
 
 //Returns the first prime after p
