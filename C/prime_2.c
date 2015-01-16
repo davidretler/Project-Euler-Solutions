@@ -1,5 +1,9 @@
 #include "prime_2.h"
 
+bool initialized = false;
+long nth_prime[N_PRIMES];
+bool primes[P_LIMIT];
+
 //Fills the factors array with the prime factors of the number
 void prime_factors(long num, int *factors)
 {

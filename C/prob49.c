@@ -27,7 +27,7 @@ int main(void)
 	    int k = j + d;
 	    if(check(i, j, k))
 	    {
-		printf("(%d, %d, %d) works!\t%d%d%d\n", i , j ,k, i , j, k);
+		printf("(%d, %d, %d) works!  Concatenated: %d%d%d\n", i , j ,k, i , j, k);
 	    }
 	}
     }
@@ -36,6 +36,9 @@ int main(void)
     return 0;
 }
 
+/*
+  Checks the three given numbers to see if the match the properties specifies in the problem
+*/
 bool check(int num_one, int num_two, int num_three)
 {
     //if the sequence is not decreasing
@@ -49,7 +52,7 @@ bool check(int num_one, int num_two, int num_three)
     sprintf(s_one, "%d", num_one);
     sprintf(s_two, "%d", num_two);
     sprintf(s_three, "%d", num_three);
-
+    //if any is a permutation of the other
     if(!is_permutation(s_one, s_two) || !is_permutation(s_one, s_three) || !is_permutation(s_two, s_three))
     {
 	return false;
@@ -60,7 +63,7 @@ bool check(int num_one, int num_two, int num_three)
 
 /*
   Returns true if and only if s_one is a permutation of s_two
- */
+*/
 bool is_permutation(char *s_one, char *s_two)
 {
     int len_one = strlen(s_one);
@@ -74,6 +77,9 @@ bool is_permutation(char *s_one, char *s_two)
 	flag_one[i] = false;
 	flag_two[i] = false;
     }
+    //Compare every character in s_one to every character in s_two
+    //if none of the characters mach or that ones that do mach have already been matched to a different
+    //character, then return false
     for(int i = 0; i < len_one; i++)
     {
 	for(int j = 0; j < len_two; j++)
