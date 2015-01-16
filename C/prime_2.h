@@ -6,7 +6,7 @@
 #define N_PRIMES 1000000
 #define P_LIMIT 1000000
 
-bool is_prime(long num);
+bool is_prime(long long num);
 int n_digits(long n);
 long next_prime(long p);
 void initialize_primes(void);
@@ -18,7 +18,7 @@ static bool initialized = false;
 
 //Returns true if a number is prime, O(sqrt(n))
 //This naive algorithm works by trial division rather than anything fancy.
-bool is_prime(long num)
+bool is_prime(long long num)
 {
     if(initialized && num < P_LIMIT)
     {

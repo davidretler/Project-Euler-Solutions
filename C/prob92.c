@@ -43,7 +43,7 @@ int main(void)
 
 /*
   Returns true if sequence reaches 89. Caches answers for efficiency
- */
+*/
 bool reaches_89(long num)
 {
     if(num == 1) return false;
@@ -76,7 +76,7 @@ int n_digits(long num)
 
 /*
   Initializes all the cache values to -1 (undefined)
- */
+*/
 void initialize_cache(void)
 {
     for(int i = 0; i < CACHE_LIMIT; i++)
