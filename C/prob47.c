@@ -28,7 +28,7 @@ int main(void)
 {
     initialize_primes();
     printf("Initialized.\n");
-    long i = 2;
+    long i =  2;
     while(!judge(i, 4))
     {
 	//printf("i = %ld\n", i);
@@ -69,6 +69,7 @@ bool judge(long num, int n_prime_factors)
 	    {
 		printf("Error: insufficient array length\n");
 		return false;
+		
 	    }
 	}
 #ifdef DEBUG

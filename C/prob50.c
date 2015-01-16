@@ -49,7 +49,7 @@ int main(void)
     //printf("%ld\n", prime_sum(543));
     
     printf("Found no answer.\n");
-    
+
 }
 
 /*

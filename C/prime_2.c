@@ -1,10 +1,11 @@
+#include "prime_2.h"
+
 //Fills the factors array with the prime factors of the number
- 
 void prime_factors(long num, int *factors)
 {
     bool first_check = true;
     int curr_prime_index = 0;
-    while(num > 1)
+    while(num != 1)
     {
 	if(first_check)
 	{
@@ -23,10 +24,7 @@ void prime_factors(long num, int *factors)
 	    first_check = true;
 	}
     }
-    if(num == 0)
-    {
-	printf("Error! Result is 0 in prime_factors()\n");
-    }
+    factors[++curr_prime_index] = -1;
     return;
 }
 
