@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define ITERATION_LIMIT 51
+#define ITERATION_LIMIT 50
 //#define DEBUG
 
 typedef unsigned long long ull_t;
@@ -36,6 +36,9 @@ bool is_palindrome(ull_t num);
 
 int main(void)
 {
+#ifdef DEBUG
+    printf("%d", is_lychrel(4994, 0));
+#else
     int count = 0;
     for(int i = 1; i < 10000; i++)
     {
@@ -45,7 +48,10 @@ int main(void)
 	}
     }
     printf("%d\n", count);
+#endif
+    
     return 0;
+
 }
 
 bool is_lychrel(ull_t num, int count)
@@ -57,9 +63,6 @@ bool is_lychrel(ull_t num, int count)
 #endif
     if(is_palindrome(sum))
     {
-#ifdef DEBUG
-	//printf("%lld\t%d\n", sum, count);
-#endif
 	return false;
     }
     else if(count > ITERATION_LIMIT)

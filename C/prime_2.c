@@ -82,6 +82,7 @@ long prime(int n)
  */
 void initialize_primes(void)
 {
+    if(initialized) return;
     int i = 0;
     long n = 2; 
     while(n < P_LIMIT || i < N_PRIMES)
