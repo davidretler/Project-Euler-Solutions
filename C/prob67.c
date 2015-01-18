@@ -1,5 +1,5 @@
 /*
-Problem 67 (unfinished)
+Problem 67
 
 By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.
 
@@ -13,17 +13,17 @@ Find the maximum total from top to bottom in triangle.txt (right click and 'Save
 #include <stdlib.h>
 #include "Triangle.h"
 
-							
-								
+
+
 long transverse_triangle(void);
 
 
 int main(void)
 {
     long sum = transverse_triangle();
-	
+
     printf("Largest sum found: %ld.\n", sum);
-	
+
     return 0;
 }
 
@@ -32,7 +32,7 @@ int main(void)
 
   The solution works thus:
   by starting at the bottom of the triangle, we can work our way up by taking the largest of the two
-  values up to the next row. So rather than testing every single possible sum, which yield exponential 
+  values up to the next row. So rather than testing every single possible sum, which yield exponential
   complexity, we only need to make n comparisons for n rows, giving us O(n^2) complexity.
  */
 long transverse_triangle(void)

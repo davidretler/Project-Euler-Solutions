@@ -6,6 +6,7 @@
 *.bak
 *.txt
 *.tmp
+*temp*
 *.asv
 
 #emacs tags and buffer files
