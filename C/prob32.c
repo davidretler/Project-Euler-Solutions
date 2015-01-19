@@ -17,8 +17,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define I_MAX 999999
-#define J_MAX 999999
+#define I_MAX 999
+#define J_MAX 999
 #define CACHE_LIMIT 10000000
 
 
@@ -84,7 +84,7 @@ int check(int num_1, int num_2)
     int prod = num_1 * num_2;
     int tot_dig = (n_digits(num_1) + n_digits(num_2) + n_digits(prod));
     if(tot_dig < 9) return -1;
-    if(tot_dig > 10) return -3;
+    if(tot_dig > 9) return -3;
     if(tot_dig == 9)
     {
 	int res = to_str_cat(num_1, num_2, prod);
