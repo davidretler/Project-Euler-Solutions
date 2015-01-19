@@ -21,14 +21,23 @@
 bool is_n_pandigital(int number, int n);
 int check(int number, int n);
 int n_digits(int num);
- 
+
+/*
+  Note: for some reason this code does not work when -O1 or -O3 is enables
+  But, befuddlingly, it works for -O2 and of course -O0
+ */
 int main(void)
 {
     int curr_max = 0;
-    for(int i = 1; i < 987654321; i++)
+    int max_i = 0;
+    int max_n = 0;
+    bool looping = true;
+    int i = 1;
+    while(looping)
     {
 	int n = 2;
 	int curr_check = 0;
+	
 	while(curr_check != -3 && curr_check != -1)
 	{
 	    curr_check = check(i, n);
@@ -36,25 +45,29 @@ int main(void)
 	    {
 		if(curr_max < curr_check)
 		{
+		    max_i = i;
+		    max_n = n;
 		    curr_max = curr_check;
-		    printf("%d\n", curr_max);
 		}
 	    }
 	    n++;
 	}
 	//break if the numbers are too large, even for the smallest n
-	if(n == 3 && curr_check == -3) break;
+	if(n == 3 && curr_check == -3) looping = false;
+	i++;
     }
 
-    printf("\nLargest 1-to-9 pandigital: %d\n", curr_max);  
+    printf("Largest 1-to-9 pandigital: %d\ni = %d\nn = %d\n", check(max_i, max_n), max_i, max_n);  
    
     return 0;
 }
 
 /*
   Returns an integer code based on the nature of the number
-  -1 -- number is correct length but not pandigital
+  Expected:
   any positive number -- number is the correct length and is pandigital
+  Error:
+  -1 -- number is correct length but not pandigital
   -2 -- number is too short
   -3 -- number is too long
 */
@@ -62,7 +75,9 @@ int check(int number, int n)
 {
     int digits = 0;
     //int prods[n];
-    char prod_s[10] = "";
+    char prod_s[10];
+    //start the string as blank
+    prod_s[0] = 0;
     for(int i = 1; i <= n; i++)
     {
 	int curr_prod = number * i;
