@@ -98,7 +98,7 @@ int check(int num_1, int num_2)
 }
 
 /*
-  Checks the cache to see if num has already been used (simple linear sort)
+  Checks the cache to see if num has already been used (simple linear search)
  */
 bool check_cache(int num)
 {
