@@ -63,7 +63,7 @@ double next_fraction_prime_diagnals() {
 	return ((double) _primes)/((double) _total);
 }
 
-// closed form for each diagonal
+// closed form for each diagonal (derived on pen and paper)
 
 long diagonal_1(long layer) {
 	return 4*layer*layer - 8*layer + 5;

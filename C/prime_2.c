@@ -11,22 +11,22 @@ void prime_factors(long num, int *factors)
     int curr_prime_index = 0;
     while(num != 1)
     {
-	if(first_check)
-	{
-	    factors[curr_prime_index] = 0;
-	    first_check = false;
-	}
+		if(first_check)
+		{
+			factors[curr_prime_index] = 0;
+			first_check = false;
+		}
 
-	if(num % prime(curr_prime_index) == 0)
-	{
-	    num = num / prime(curr_prime_index);
-	    factors[curr_prime_index] = factors[curr_prime_index] + 1;
-	}
-	else
-	{
-	    curr_prime_index++;
-	    first_check = true;
-	}
+		if(num % prime(curr_prime_index) == 0)
+		{
+			num = num / prime(curr_prime_index);
+			factors[curr_prime_index] = factors[curr_prime_index] + 1;
+		}
+		else
+		{
+			curr_prime_index++;
+			first_check = true;
+		}
     }
     factors[++curr_prime_index] = -1;
     return;
@@ -40,9 +40,9 @@ bool is_prime(long long num)
     if(initialized && num < P_LIMIT)
     {
 #ifdef DEBUG_PRIME
-	printf("Cached!\n");
+		printf("Cached!\n");
 #endif
-	return primes[num];
+		return primes[num];
     }
     
     if(num == 1 || num <= 0) return false;
@@ -53,12 +53,12 @@ bool is_prime(long long num)
 
     while(n <= max)
     {
-	if(num % n == 0 && num != n)
-	{
-	    prime = false;
-	    break;
-	}
-	n++;
+		if(num % n == 0 && num != n)
+		{
+			prime = false;
+			break;
+		}
+		n++;
     }
      
     return prime;
@@ -69,12 +69,12 @@ long prime(int n)
 {
     if(initialized && n < N_PRIMES)
     {
-	return nth_prime[n];
+		return nth_prime[n];
     }
     else
     {
-	printf("Error!\n");
-	return -1;
+		printf("Error!\n");
+		return -1;
     }
 }
 
@@ -88,17 +88,17 @@ void initialize_primes(void)
     long n = 2; 
     while(n < P_LIMIT || i < N_PRIMES)
     {
-	bool curr_b = is_prime(n);
-	if(n < P_LIMIT)
-	{
-	    primes[n] = curr_b;
-	}
-	if(curr_b && i < N_PRIMES)
-	{
-	    nth_prime[i] = n;
-	    i++;
-	}
-	n++;
+		bool curr_b = is_prime(n);
+		if(n < P_LIMIT)
+		{
+			primes[n] = curr_b;
+		}
+		if(curr_b && i < N_PRIMES)
+		{
+			nth_prime[i] = n;
+			i++;
+		}
+		n++;
     }
     initialized = true;
 }
@@ -118,7 +118,7 @@ long next_prime(long p)
     p += (p % 2 == 0) ? 1 : 2;
     while(!is_prime(p))
     {
-	p += 2;
+		p += 2;
     }
     return p;
 }
