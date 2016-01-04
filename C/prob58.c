@@ -9,10 +9,15 @@
 int SPIRAL_LAYERS;
 //int SPIRAL_MAX;
 
+int _primes = 0;
+int _total = 1;
+int layer = 2;
+
 long** init_spiral();
 void fill_spiral(long** spiral);
 void display_spiral(long** spiral);
 double fraction_prime_diagnals(long** spiral, int curr_layers);
+double next_fraction_prime_diagnals(long** spiral);
 void free_spiral(long** spiral);
 
 int main() {
@@ -21,18 +26,18 @@ int main() {
 	initialize_primes();
 	puts("Initialized\n\n");
 	
-	SPIRAL_LAYERS = 6;
-
+	SPIRAL_LAYERS = 100000;
+	puts("Making Spiral...\n");
 	long** spiral = init_spiral();
 	fill_spiral(spiral);
+	puts("Done\n\n");
+	//display_spiral(spiral);
 
-	display_spiral(spiral);
-
-	for(int curr_layers = 2; curr_layers < SPIRAL_LAYERS; curr_layers++) {
+	for(int curr_layers = 2; curr_layers <= SPIRAL_LAYERS; curr_layers++) {
 		
-		double fraction = fraction_prime_diagnals(spiral, curr_layers);
+		double fraction = next_fraction_prime_diagnals(spiral);
 	
-		printf("%d: %lf%% are prime.\n", curr_layers , fraction*100);
+		//printf("%d: %lf%% are prime.\n", curr_layers , fraction*100);
 		
 		if(fraction < 0.1) {
 			printf("%d\n", curr_layers);
@@ -136,8 +141,8 @@ long** init_spiral() {
 
 double fraction_prime_diagnals(long** spiral, int layers) {
 
-	int max = 2*layers - 1;
-	int center_x = max / 2;
+	//int max = 2*layers - 1;
+	int center_x = SPIRAL_MAX / 2;
 	int center_y = center_x;
 	int limit_low = center_x - (layers - 1);
 	int limit_high = center_x + (layers - 1);
@@ -145,13 +150,13 @@ double fraction_prime_diagnals(long** spiral, int layers) {
 	long total = 0;
 	long primes = 0;
 	
-	for(int i = limit_low; i < limit_high; i++) {
+	for(int i = limit_low; i <= limit_high; i++) {
 		// first diagnal
 		long n1 = spiral[i][i];
 		// second diagnal
 		long n2 = spiral[SPIRAL_MAX - i - 1][i];
 		
-		//printf("(%ld, %ld)\n", n1, n2);
+		// printf("(%ld, %ld)\n", n1, n2);
 		
 		if(is_prime(n1)) {
 			primes++;
@@ -175,4 +180,25 @@ void free_spiral(long** spiral) {
 		free(spiral[i]);
 	}
 	free(spiral);
+}
+
+double next_fraction_prime_diagnals(long** spiral) {
+	int center_x = SPIRAL_MAX / 2;
+	int center_y = center_x;
+	
+	int x1 = center_x + (layer - 1);
+	int x2 = center_x - (layer - 1);
+	
+	// check all 4 new numbers
+	if(is_prime(spiral[x1][x1])) _primes++;
+	if(is_prime(spiral[x1][x2])) _primes++;
+	if(is_prime(spiral[x2][x1])) _primes++;
+	if(is_prime(spiral[x2][x2])) _primes++;
+	
+	_total += 4;
+	
+	// next time check next layer
+	layer++;
+	
+	return ((double) _primes)/((double) _total);
 }
