@@ -19,21 +19,24 @@ class Hand:
 		
 	
 	def __str__(self):
-		return " ".join(self.cards)
+		return " ".join(self.cards) + " (" + self.type + ")"
 		
 	@staticmethod
 	def compare(hand1, hand2):
+		Hand.tie = False
 		if HandTypes[hand1.type] > HandTypes[hand2.type]:
 			return 1
 		elif HandTypes[hand1.type] < HandTypes[hand2.type]:
 			return 2
 		else:
+			
+			
 			if CardValues[hand1.card_val] > CardValues[hand2.card_val]:
 				return 1
 			elif  CardValues[hand1.card_val] < CardValues[hand2.card_val]:
 				return 2
 			else:
-				for i in range(2,5):
+				for i in range(1,5):
 					if CardValues[hand1.nth_highest(i)] > CardValues[hand2.nth_highest(i)]:
 						return 1
 					elif CardValues[hand1.nth_highest(i)] < CardValues[hand2.nth_highest(i)]:
@@ -224,7 +227,7 @@ class Hand:
 player_1_wins = 0
 games = 0
 		
-with open('poker_test.txt') as file:
+with open('p054_poker.txt') as file:
 	
 	for line in file:
 	
@@ -240,14 +243,8 @@ with open('poker_test.txt') as file:
 		winner = Hand.compare(hand1, hand2)
 		
 		if winner == 1:
-			#print "Player 1 wins!"
 			player_1_wins = player_1_wins + 1
-		elif winner == 2:
-			pass
-			#print "Plater 2 wins!"
-		else:
-			pass
-			#print "Could not resolve tie"
+
 			
 		games = games + 1
 

@@ -7,7 +7,7 @@ int digit_at(unsigned long num, int pos);
 
 int main() {
 
-
+	//start at upper bound and go down
 	for(unsigned long n = 1389026624; n > 1; n--) {
 		if(check(n*n)) {
 			printf("%lu works! (%lu)\n", n, n*n);
