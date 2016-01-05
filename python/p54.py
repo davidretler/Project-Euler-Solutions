@@ -21,6 +21,26 @@ class Hand:
 	def __str__(self):
 		return " ".join(self.cards)
 		
+	@staticmethod
+	def compare(hand1, hand2):
+		if HandTypes[hand1.type] > HandTypes[hand2.type]:
+			return 1
+		elif HandTypes[hand1.type] < HandTypes[hand2.type]:
+			return 2
+		else:
+			if CardValues[hand1.card_val] > CardValues[hand2.card_val]:
+				return 1
+			elif  CardValues[hand1.card_val] < CardValues[hand2.card_val]:
+				return 2
+			else:
+				for i in range(2,5):
+					if CardValues[hand1.nth_highest(i)] > CardValues[hand2.nth_highest(i)]:
+						return 1
+					elif CardValues[hand1.nth_highest(i)] < CardValues[hand2.nth_highest(i)]:
+						return 2
+				return 0 # could not resolve tie in rank
+				
+		
 	# parse the hand to find the hand type and card value
 	def parse_hand(self):
 		self.sort_cards()
@@ -49,8 +69,13 @@ class Hand:
 		elif self.two_pairs():
 			self.type = 'Two Pairs'
 			self.card_val = self.card_val_two_pairs()
-			
-						
+		elif self.one_pair():
+			self.type = 'One Pair'
+			self.card_val = self.card_val_one_pair()
+		else:
+			self.type = 'High Card'
+			self.card_val = self.cards[0][0]
+					
 		
 	def sort_cards(self):
 		# naive selection sort works because hand is always 5 cards 
@@ -170,3 +195,62 @@ class Hand:
 			return val1
 		else:
 			return val2
+			
+	def card_val_one_pair(self):
+		if self.same_val(0,2):
+			return self.cards[0][0]
+		elif self.same_val(1,3):
+			return self.cards[1][0]
+		elif self.same_val(2,4):
+			return self.cards[2][0]
+		else:
+			return self.cards[3][0]
+			
+	# get the nth highest value card (for tie breaking)
+	def nth_highest(self, n):
+		i = 1
+		j = 0
+		while i != n and j != 5:
+			if self.cards[j][0] != self.cards[j+1][0]:
+				i = i + 1
+			j = j + 1
+			
+		if j != 5:
+			return self.cards[j][0]
+		else:
+			# if nth highest doesnt exist, return lowest
+			return self.cards[4][0]
+	
+player_1_wins = 0
+games = 0
+		
+with open('poker_test.txt') as file:
+	
+	for line in file:
+	
+		hand1 = line[0:14]
+		hand2 = line[15:29]
+	
+		hand1 = Hand(hand1)
+		hand2 = Hand(hand2)
+	
+		#print str(hand1) + ": " + hand1.type + "(" + hand1.card_val + ")"
+		#print str(hand2) + ": " + hand2.type + "(" + hand2.card_val + ")"
+		
+		winner = Hand.compare(hand1, hand2)
+		
+		if winner == 1:
+			#print "Player 1 wins!"
+			player_1_wins = player_1_wins + 1
+		elif winner == 2:
+			pass
+			#print "Plater 2 wins!"
+		else:
+			pass
+			#print "Could not resolve tie"
+			
+		games = games + 1
+
+print "Player 1 won " + str(player_1_wins) + " out of " + str(games) + " hands."
+			
+	
