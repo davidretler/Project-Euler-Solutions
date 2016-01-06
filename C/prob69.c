@@ -3,7 +3,9 @@
 #include "prime_2.h"
 
 #define GCD_SAVE 20000
+#define TOTIENT_SAVE 10000000
 
+int totient_r(int num);
 int totient(int num);
 int gcd(int p, int q);
 void init_saved();
@@ -11,25 +13,27 @@ void init_saved();
 bool _is_gcd_saved[GCD_SAVE][GCD_SAVE];
 int _gcd_saved[GCD_SAVE][GCD_SAVE];
 
+bool _is_totient_saved[TOTIENT_SAVE];
+int _totient_saved[TOTIENT_SAVE];
+
 int main() {
 
-	puts("Initializing prime list...\n");
+	puts("Initializing...\n");
 	initialize_primes();
-	puts("Initialized prime list\n\n");
-	
 	init_saved();
+	puts("Initialized\n\n");
 	
 	double max = 1;
 	int max_n = 0;
 	for(int n = 2; n <= 1000000; n++) {
-		double curr = ((double)n)/totient(n);
+		double curr = ((double)n)/totient_r(n);
 		if(curr > max) {
 			max = curr;
 			max_n = n;
 			printf("%d\n", n);
 		}
 		if(n % 100 == 0) {
-			printf("(%d)\n", n);
+			printf("(%d: %f, %d: %f)\n", n, curr, max_n, max);
 		}
 	}
 	
@@ -39,26 +43,79 @@ int main() {
 	return 0;
 }
 
+// recursive totient, for simple cases
+int totient_r(int n) {
+	
+	if(n < TOTIENT_SAVE && _is_totient_saved[n]) {
+		return _totient_saved[n];
+	} else {
+		int t;
+		if(n == 1) return 0;
+		if(n == 2) return 1;
+		if(n % 2 == 0) {
+			if (n/2 % 2 == 0) {
+				t = 2 * totient_r(n/2);
+			} else {
+				t = totient_r(n/2);
+			}
+		} else {
+			// call the more general one
+			t = totient(n);
+		}
+		
+		if(n < TOTIENT_SAVE) {
+			_totient_saved[n] = t;
+			_is_totient_saved[n] = true;
+		}
+		
+		return t;
+	}
+}
+
 // the number of numbers less than n which are relatively prime to num
 int totient(int num) {
 	
-	int sum = 1; //start at 1 because 1 is always relatively prime to num
-	
-	for(int n = 2; n < num; n++) {
-		
-		bool relatively_prime = true;
-		int curr_p = 0;
-		long _prime = 2;
-		
-		if(gcd(num, n) == 1) {
-			//printf("%d, ", n);
-			sum++;
+	if(num < TOTIENT_SAVE && _is_totient_saved[num]) {
+		return _totient_saved[num];
+	} else {
+		if(is_prime(num)) return num - 1; 
+		else {
+			// not prime,must have a prime factors
+			// if factor has multiplicity of 2 we can simplify
+			long _prime = 2;
+			int curr_p = 0;
+			while(_prime < num) {
+				if(num % _prime == 0 && num/_prime % _prime == 0) {
+					break;
+				}
+				_prime = prime(++curr_p);
+			}
+			if(_prime < num) {
+				return _prime * totient_r(num/_prime);
+			}
+			
 		}
+	
+		int prod = 1;
+	
+		long _prime = 2;
+		int curr_p = 0;
+		while(_prime < num) {
+				
+			if(num % _prime == 0) {
+				prod *= (_prime - 1);
+			}
+			
+			_prime = prime(++curr_p);
+		}
+		
+		if(num < TOTIENT_SAVE) {
+			_totient_saved[num] = prod;
+			_is_totient_saved[num] = true;
+		}
+		
+		return prod;
 	}
-	
-	//printf("\n");
-	
-	return sum;
 }
 
 // Euclid's algorithm for GCD
@@ -87,5 +144,8 @@ void init_saved(){
 		for(int j = 0; j < GCD_SAVE; j++) {
 			_is_gcd_saved[i][j] = false;
 		}
+	}
+	for(int i = 0; i < TOTIENT_SAVE; i++) {
+		_is_totient_saved[i] = false;
 	}
 }

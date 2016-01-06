@@ -6,7 +6,7 @@ CardValues = {'2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, 'T':10, 'J
 
 class Hand:
 
-	def __init__(self, cards=[]):
+	def __init__(self, cards):
 	
 		if (type(cards) == str):
 			self.cards = cards.split(" ")
@@ -29,8 +29,7 @@ class Hand:
 		elif HandTypes[hand1.type] < HandTypes[hand2.type]:
 			return 2
 		else:
-			
-			
+			# break the tie
 			if CardValues[hand1.card_val] > CardValues[hand2.card_val]:
 				return 1
 			elif  CardValues[hand1.card_val] < CardValues[hand2.card_val]:
