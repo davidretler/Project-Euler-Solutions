@@ -26,14 +26,14 @@ int main() {
 	double max = 1;
 	int max_n = 0;
 	for(int n = 2; n <= 1000000; n++) {
-		double curr = ((double)n)/totient_r(n);
+		double curr = ((double)n)/totient(n);
 		if(curr > max) {
 			max = curr;
 			max_n = n;
-			printf("%d\n", n);
+			//printf("%d\n", n);
 		}
-		if(n % 100 == 0) {
-			printf("(%d: %f, %d: %f)\n", n, curr, max_n, max);
+		if(n % 1 == 0) {
+			//printf("(%d: %f, %d: %f)\n", n, curr, max_n, max);
 		}
 	}
 	
@@ -43,79 +43,30 @@ int main() {
 	return 0;
 }
 
-// recursive totient, for simple cases
-int totient_r(int n) {
-	
-	if(n < TOTIENT_SAVE && _is_totient_saved[n]) {
-		return _totient_saved[n];
-	} else {
-		int t;
-		if(n == 1) return 0;
-		if(n == 2) return 1;
-		if(n % 2 == 0) {
-			if (n/2 % 2 == 0) {
-				t = 2 * totient_r(n/2);
-			} else {
-				t = totient_r(n/2);
-			}
-		} else {
-			// call the more general one
-			t = totient(n);
-		}
-		
-		if(n < TOTIENT_SAVE) {
-			_totient_saved[n] = t;
-			_is_totient_saved[n] = true;
-		}
-		
-		return t;
-	}
-}
 
 // the number of numbers less than n which are relatively prime to num
 int totient(int num) {
 	
-	if(num < TOTIENT_SAVE && _is_totient_saved[num]) {
-		return _totient_saved[num];
-	} else {
-		if(is_prime(num)) return num - 1; 
-		else {
-			// not prime,must have a prime factors
-			// if factor has multiplicity of 2 we can simplify
-			long _prime = 2;
-			int curr_p = 0;
-			while(_prime < num) {
-				if(num % _prime == 0 && num/_prime % _prime == 0) {
-					break;
-				}
-				_prime = prime(++curr_p);
-			}
-			if(_prime < num) {
-				return _prime * totient_r(num/_prime);
-			}
-			
-		}
+	int n = num;
 	
-		int prod = 1;
-	
-		long _prime = 2;
-		int curr_p = 0;
-		while(_prime < num) {
-				
-			if(num % _prime == 0) {
-				prod *= (_prime - 1);
-			}
+	if(is_prime(num)) return num - 1; 
+
+
+	double prod = 1;
+
+	long _prime = 2;
+	int curr_p = 0;
+	while(_prime < num) {
 			
-			_prime = prime(++curr_p);
+		if(num % _prime == 0) {
+			prod *= (1 - 1./_prime);
 		}
 		
-		if(num < TOTIENT_SAVE) {
-			_totient_saved[num] = prod;
-			_is_totient_saved[num] = true;
-		}
-		
-		return prod;
-	}
+		_prime = prime(++curr_p);
+	}	
+	
+	
+	return (int)(n*prod);
 }
 
 // Euclid's algorithm for GCD
@@ -135,8 +86,7 @@ int gcd(int p, int q) {
 			//puts("Not saved\n");
 		}
 		return _gcd;
-	}
-	
+	}	
 }
 
 void init_saved(){
