@@ -9,7 +9,7 @@
 #define N_PRIMES 100000
 #endif
 #ifndef P_LIMIT
-#define P_LIMIT 1000000
+#define P_LIMIT 100000000
 #endif
 
 //#define DEBUG_PRIME

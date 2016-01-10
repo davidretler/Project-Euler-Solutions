@@ -1,7 +1,7 @@
 #include "stdio.h"
 #include "stdbool.h"
 
-#define MAX_SAVE 100
+#define MAX_SAVE 1000
 
 void p76_init();
 long ways(int num);
@@ -15,7 +15,7 @@ int main() {
 	
 	p76_init();
 	
-	for(int i = 100; i <= 100; i++) {
+	for(int i = 1; i <= 100; i++) {
 		printf("%ld\n", ways(i));
 	}
 	puts("\n");

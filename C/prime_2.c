@@ -47,11 +47,11 @@ bool is_prime(long long num)
     
     if(num == 1 || num <= 0) return false;
 
-    long max = ceil(sqrt(num));
+    //long max = ceil(sqrt(num));
     long n = 2;
     bool prime = true;
 
-    while(n <= max)
+    while(n*n < num)
     {
 		if(num % n == 0 && num != n)
 		{
@@ -80,26 +80,35 @@ long prime(int n)
 
 /*
   Initialized the primes and nth_prime arrays by getting all the primes up to P_LIMIT
+  
+  Uses prime sieve
  */
 void initialize_primes(void)
 {
     if(initialized) return;
-    int i = 0;
-    long n = 2; 
-    while(n < P_LIMIT || i < N_PRIMES)
-    {
-		bool curr_b = is_prime(n);
-		if(n < P_LIMIT)
-		{
-			primes[n] = curr_b;
-		}
-		if(curr_b && i < N_PRIMES)
-		{
-			nth_prime[i] = n;
-			i++;
-		}
-		n++;
+    
+    // sieve portion
+    for(int i = 0; i < P_LIMIT; i++) {
+    	primes[i] = true;
     }
+    for(int i = 2; i <= P_LIMIT/2; i++) {
+    	for(int j = 2*i; j <= P_LIMIT; j += i) {
+    		primes[j] = false;
+    	}
+    }
+    
+    // fill array of nth primes
+    int j = 0;
+    for(int i = 0; i < P_LIMIT && j < N_PRIMES; i++) {
+    	if(primes[i]) {
+    		nth_prime[j++] = i;
+    	}
+    }
+    // warning if not enough primes determined to fill N_PRIMES arrays
+    if(j < N_PRIMES) {
+    	puts("Warning: not enough primes determined to fill N_PRIMES array.\n\n");
+    }
+
     initialized = true;
 }
 
