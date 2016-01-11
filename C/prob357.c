@@ -17,6 +17,7 @@ int main() {
 			sum += i;
 			if(sum < old_sum) {
 				puts("Error: overflow.");
+				return 1;
 			}
 		}
 		//if(i % 1000 == 0) printf("%d\n", i);
