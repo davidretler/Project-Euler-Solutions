@@ -1,6 +1,8 @@
 #compiled code
 *.exe
 *.stackdump
+*.out
+*.so
 
 #backups/temp files
 *.bak
